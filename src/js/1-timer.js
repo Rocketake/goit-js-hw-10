@@ -24,14 +24,14 @@ const options = {
   defaultDate: new Date(),
   minuteIncrement: 1,
   onClose(selectedDates) {
-    console.log(selectedDates[0]);
     userSelectedDate = selectedDates[0];
-    console.log(Date.parse(userSelectedDate) < Date.now());
     if (Date.parse(userSelectedDate) < Date.now()) {
       iziToast.warning({
-        title: 'Error',
-        message: 'Illegal operation',
+        message: 'Please choose a date in the future',
         position: 'topRight',
+        backgroundColor: '#EF4040',
+        messageColor: '#fff',
+        timeout: '3000',
       });
       startButton.setAttribute('disabled', '');
     } else {
@@ -47,9 +47,7 @@ function setTimer() {
   startButton.setAttribute('disabled', '');
   intervalId = setInterval(() => {
     const timerDate = Date.parse(userSelectedDate) - Date.now();
-    console.log(timerDate);
     const convertedTimerDate = convertMs(timerDate);
-    console.log(convertedTimerDate);
     if (timerDate < 1000) {
       clearInterval(intervalId);
       input.removeAttribute('disabled', '');
